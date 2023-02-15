@@ -4,6 +4,7 @@ describe('login process', () => {
     cy.visit('/')
   }) 
 
+//  describe('login process', () => {
   it('test about not login', () => {
     cy.login(null, 'test')
 
@@ -33,15 +34,36 @@ describe('login process', () => {
     // cy.get('button[type=submit]').click()
         
     cy.contains('Добро пожаловать test@test.com').should('be.visible')
+
+    cy.contains('Add new').click()
+    cy.contains('Book description').should('be.visible')    
+    cy.get('#title').type("Alisa")
+    cy.contains('Submit').click()
+    cy.contains('Alisa').should('be.visible')
+    //cy.contains('Add to favorite').click()
+
+    cy.contains('Add new').click()
+    cy.contains('Book description').should('be.visible')
+    cy.get('#title').type("Garry Potter")
+    cy.contains('Submit').click()
+    cy.contains('Garry Potter').should('be.visible')
+
+    cy.contains('Books list').click()
+    cy.contains('Alisa').should('be.visible')
+    cy.contains('Garry Potter').should('be.visible')
+
+    cy.contains('Favorites').click()
+    cy.contains('Alisa').should('be.visible')    
   })
+
+
+//describe('books process', () => {
+  
+  it('test about Add to favorite', () => {
+    if(cy.contains('Alisa').should('be.visible')) {
+      cy.contains('Add to favorite').click()
+      cy.contains('Delete from favorite').should('be.visible')
+    }
+  }) 
 })
 
-describe('books process', () => {
-  it('test about add new books', () => {
-    cy.get('button[type=Add new]').click() // узнать бы что именно неверно в синтаксисе! почему тест дальше не идет?
-    cy.contains('Book description').should('be.visible')
-    
-    cy.get('#Enter book title').type("Alisa")
-    cy.contains('Submit').click()
-  })
-})
